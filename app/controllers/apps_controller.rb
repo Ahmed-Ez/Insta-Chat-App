@@ -1,5 +1,4 @@
 require 'digest'
-
 class AppsController < ApplicationController
   def index
     @apps = App.all
@@ -30,6 +29,7 @@ class AppsController < ApplicationController
     app = App.new({name: params[:name], token: Digest::MD5.hexdigest(params[:name]) })
 
     if app.save
+      Sender.push(app.to_json())
       return render json: app, status: :created
     else
       return render json: app.errors, status: :unprocessable_entity
