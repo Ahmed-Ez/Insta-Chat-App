@@ -2,6 +2,7 @@ require 'digest'
 class AppsController < ApplicationController
   def index
     @apps = App.all
+
     if !@apps.any?
       return render status: :no_content
     end
