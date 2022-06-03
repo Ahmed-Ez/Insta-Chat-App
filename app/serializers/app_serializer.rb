@@ -1,3 +1,3 @@
 class AppSerializer < ActiveModel::Serializer
-  attributes :name, :token
+  attributes :name, :token,:created_at,:chats_count
 end

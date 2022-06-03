@@ -2,20 +2,61 @@ require 'bunny'
 
 class Consumer
 
-  def self.run_consumer
-    connection = Bunny.new(hostname:ENV['MQ_HOST'])
-    connection.start
+  
+  def initialize
 
-    channel = connection.create_channel
-    queue = channel.queue('test',durable: true)
+    @connection = Bunny.new(hostname:ENV['MQ_HOST'])
+    @connection.start
 
-    channel.prefetch(1)
+    @channel = @connection.create_channel
+  end
+
+  def run_apps_consumer
+    
+    queue = @channel.queue(ENV['APPS_MQ_NAME'],durable: true)
+
+    @channel.prefetch(1)
     begin
         queue.subscribe(manual_ack: true,block: false) do |_delivery_info, _properties, body|
-        channel.ack(_delivery_info.delivery_tag)
+        json_data = JSON.parse(body)
+        app = App.new(json_data)
+        app.save()
+        @channel.ack(_delivery_info.delivery_tag)
         end
       rescue
-        connection.close
+        @connection.close
+      end
+  end
+
+  def run_chats_consumer
+    
+    queue = @channel.queue(ENV['CHATS_MQ_NAME'],durable: true)
+
+    @channel.prefetch(1)
+    begin
+        queue.subscribe(manual_ack: true,block: false) do |_delivery_info, _properties, body|
+          json_data = JSON.parse(body)
+          puts json_data
+        @channel.ack(_delivery_info.delivery_tag)
+        end
+      rescue
+        @connection.close
+      end
+  end
+
+  def run_messages_consumer
+    
+    queue = @channel.queue(ENV['MESSAGES_MQ_NAME'],durable: true)
+
+    @channel.prefetch(1)
+    begin
+        queue.subscribe(manual_ack: true,block: false) do |_delivery_info, _properties, body|
+          json_data = JSON.parse(body)
+          puts json_data
+        @channel.ack(_delivery_info.delivery_tag)
+        end
+      rescue
+        @connection.close
       end
   end
 end
