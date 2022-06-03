@@ -61,8 +61,9 @@ class AppsController < ApplicationController
       if app == nil
         return head :not_found
       end
-      app.update(name:params[:name])
-      return render json: app, status: :ok
+      app.name = params[:name]
+      Sender.push(ENV['APPS_MQ_NAME'],app.to_json(:except => [ :id, :created_at, :chats_count,:updated_at ]))
+      return head :ok
     rescue Exception => e
       return render json: {error: e.message},status: :internal_server_error
     end
