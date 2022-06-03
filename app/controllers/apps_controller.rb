@@ -22,7 +22,7 @@ class AppsController < ApplicationController
     if @app == nil
       return head :not_found
     end
-
+    @app.delete()
     return head :no_content
   end
 
