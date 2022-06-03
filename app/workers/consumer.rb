@@ -41,10 +41,16 @@ class Consumer
     @channel.prefetch(1)
     begin
         queue.subscribe(manual_ack: true,block: false) do |_delivery_info, _properties, body|
-          json_data = JSON.parse(body)
-          puts json_data
         @channel.ack(_delivery_info.delivery_tag)
+        json_data = JSON.parse(body)
+        chat = Chat.where(app_id:json_data["app_id"],number:json_data["number"]).first
+        if chat != nil 
+          chat.update(name:json_data["name"])
+        else
+          chat = Chat.new(json_data)
+          chat.save()
         end
+      end
       rescue
         @connection.close
       end
