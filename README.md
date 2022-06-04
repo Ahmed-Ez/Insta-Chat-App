@@ -10,6 +10,12 @@ just run docker-compose up in root directory
 docker-compose up
 ```
 
+if you face vm.max_map_count issue with the Elastic search container it's a docker vertual memory issue and has to be handled on the host machine ( your pc or server), Refer to this stackoverflow issue.
+
+```
+https://stackoverflow.com/questions/69214301/using-docker-desktop-for-windows-how-can-sysctl-parameters-be-configured-to-per
+```
+
 ## Containers
 
 These are the containers that will be created and run
