@@ -54,6 +54,8 @@ class MessagesController < ApplicationController
                 return head :not_found
             end
             message.delete
+            chat.decrement(:messages_count,1)
+            chat.save
             return  head :no_content
           rescue Exception => e
             return render json: {error: e.message},status: :internal_server_error

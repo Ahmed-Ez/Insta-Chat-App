@@ -43,6 +43,8 @@ class ChatsController < ApplicationController
             end
             NumbersHelper.delete_key(chat.number)
             chat.delete
+            app.decrement(:chats_count,1)
+            app.save()
             return head :no_content
         rescue Exception => e
             return render json: {error: e.message},status: :internal_server_error
