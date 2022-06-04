@@ -3,7 +3,7 @@ class CreateApps < ActiveRecord::Migration[7.0]
     create_table :apps  do |t|
       t.string :name
       t.string :token
-      t.integer :chats_count
+      t.integer :chats_count ,:default => 0
       t.timestamps
 
     end

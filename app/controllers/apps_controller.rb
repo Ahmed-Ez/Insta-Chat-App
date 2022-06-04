@@ -1,4 +1,5 @@
 require 'digest'
+require 'numbers_helper'
 class AppsController < ApplicationController
   def index
     begin
@@ -31,6 +32,7 @@ class AppsController < ApplicationController
       return head :not_found
     end
     app.delete()
+    NumbersHelper.delete_key(app.token)
     return head :no_content
     rescue Exception => e
       return render json: {error: e.message},status: :internal_server_error

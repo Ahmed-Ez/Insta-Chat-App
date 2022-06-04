@@ -49,6 +49,9 @@ class Consumer
         else
           chat = Chat.new(json_data)
           chat.save()
+          app = App.find_by(id:json_data["app_id"])
+          app.increment(:chats_count,1)
+          app.save()
         end
       end
       rescue
@@ -63,9 +66,18 @@ class Consumer
     @channel.prefetch(1)
     begin
         queue.subscribe(manual_ack: true,block: false) do |_delivery_info, _properties, body|
+          @channel.ack(_delivery_info.delivery_tag)
           json_data = JSON.parse(body)
-          puts json_data
-        @channel.ack(_delivery_info.delivery_tag)
+          message = Message.where(chat_id:json_data["chat_id"],number:json_data["number"]).first
+          if message != nil
+            message.update(content:json_data["content"])
+          else
+            message = Message.new(json_data)
+            message.save()
+            chat = Chat.find_by(id:json_data["chat_id"])
+            chat.increment(:messages_count,1)
+            chat.save()
+          end
         end
       rescue
         @connection.close

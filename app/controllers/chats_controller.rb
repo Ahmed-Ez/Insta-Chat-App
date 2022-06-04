@@ -2,15 +2,14 @@ require 'numbers_helper'
 class ChatsController < ApplicationController
     def index
         begin
-            app = App.find_by(token:params[:app_id])
+            app = App.includes(:chats).find_by(token:params[:app_id])
             if app == nil
                 return head :not_found
             end
-            chats = Chat.where(app_id:app.token)
-            if !chats.any?
-              return render status: :no_content
+            if !app.chats.any?
+                return head :no_content
             end
-            return render json: chats, status: :ok
+            return render json: app.chats, status: :ok
           rescue Exception => e
             return render json: {error: e.message},status: :internal_server_error
         end
@@ -42,6 +41,7 @@ class ChatsController < ApplicationController
             if chat == nil
             return head :not_found
             end
+            NumbersHelper.delete_key(chat.number)
             chat.delete
             return head :no_content
         rescue Exception => e
