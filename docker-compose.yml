@@ -17,14 +17,15 @@ services:
           image: docker.elastic.co/elasticsearch/elasticsearch:7.17.4
           restart: always
           ports:
-            - "9200:9200"
-            - "9300:9300"
+            - "920:9200"
+            - "930:9300"
     rabbitmq:
           image: rabbitmq:3
           restart: always
           ports:
-            - "5672:5672"
             - "15672:15672"
+            - "5672:5672"
+            
     app: 
         build: .
         command: bundle exec rails s -p 3000 -b '0.0.0.0'
@@ -45,8 +46,7 @@ services:
             - rabbitmq
         environment:
             REDIS_DB: 0
-            REDIS_URL: redis://127.0.0.1
-            REDIS_PORT: 6379
+            REDIS_HOST: redis
             MYSQL_USER: root
             MYSQL_PASSWORD: admin
             MYSQL_HOST: db
