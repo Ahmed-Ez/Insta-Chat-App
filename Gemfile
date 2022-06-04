@@ -37,6 +37,9 @@ gem 'bunny'
 
 gem "redis"
 
+gem  "elasticsearch-model"
+gem  "elasticsearch-rails"
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
