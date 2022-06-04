@@ -24,6 +24,12 @@ These are the containers that will be created and run
 
 5- The Rails application container
 
+## Documentation
+I created a simple Postman collection and documentation to make it easier to try the Application out, It's attached in the link below
+
+```
+https://documenter.getpostman.com/view/20503975/Uz5GowKg
+```
 
 ## Improvements
 

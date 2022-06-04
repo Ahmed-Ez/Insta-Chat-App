@@ -17,8 +17,7 @@ services:
           image: docker.elastic.co/elasticsearch/elasticsearch:7.17.4
           restart: always
           ports:
-            - "920:9200"
-            - "930:9300"
+            - "9300:9200"
     rabbitmq:
           image: rabbitmq:3
           restart: always
