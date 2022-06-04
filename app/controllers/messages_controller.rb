@@ -104,4 +104,24 @@ class MessagesController < ApplicationController
         end
     end
 
+    def search
+        begin
+            app = App.find_by(token:params[:app_id])
+            if app == nil
+                return head :not_found
+            end
+            chat = Chat.where(app_id:app.id,number:params[:chat_id]).first
+            if chat == nil
+              return head :not_found
+            end
+            response = Message.search(query:{match:{content:params[:content]}})
+            response = response.results.select { |r| r.chat_id == chat.id }
+            if !response.any?
+                return head :no_content
+            end
+            return render json:response, status: :ok
+        rescue Exception => e
+            return render json: {error: e.message},status: :internal_server_error
+        end
+    end
 end

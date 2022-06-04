@@ -6,7 +6,11 @@ Rails.application.routes.draw do
   # root "articles#index"
   resources :apps do
     resources :chats do
-      resources :messages
+      resources :messages do
+        collection do
+          get 'search'
+        end
+      end
     end
   end
 end
