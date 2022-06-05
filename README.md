@@ -30,7 +30,7 @@ These are the containers that will be created and run
 
 5- The Rails application container
 
-##Usage
+## Usage
 This is how I used each technology in the previously mentioned containers to responded to each requirement in the challenge description
 
 1- Elastic search was used to Partially search messages content, I attached the ES model into the ActiveRecord and used the Search method to partially search the content
@@ -43,7 +43,7 @@ This is how I used each technology in the previously mentioned containers to res
 
 
 ## Documentation
-I created a simple Postman collection and documentation to make it easier to try the Application out, It's attached in the link below
+I created a simple Postman collection and documentation to make it easier to try the Application out, You can see endpoints documentation and download the collection it self, It's attached in the link below
 
 ```
 https://documenter.getpostman.com/view/20503975/Uz5GowKg
@@ -55,7 +55,7 @@ Some improvements I would do If I had more time or was more familiar with Ruby a
 
 1- Separate consumer worker that takes MQ message into it's own application in a separate container, As I consider it a separate service.
 
-2- I thought about using token and number to as foreign keys in the relations to make it easier to join the table , , However that would make ids obsolete.
+2- I thought about using token and number in the relations to make it easier to join the tables and read from them, However that would make ids obsolete.
 
 3- Improve overall project structure and separate some logic from the controllers into separate methods.
 
