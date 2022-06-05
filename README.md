@@ -4,17 +4,40 @@ A chat app for Instabug challenge, Please note this might not be the best Ruby/R
 
 ## How to run
 
-Just clone this repository and run docker-compose up in root directory, And make sure none of the ports specified in the docker-compose file are already in use.
+**important** 
+
+because of git for windows line breaks are forced to dos format after cloning it might cause issues in running docker files, Please run this command before cloning the repository.
+
+```
+git config --global core.autocrlf false
+```
+
+ clone this repository and run docker-compose up in root directory, And make sure none of the ports specified in the docker-compose file are already in use.
 
 ```bash
 docker-compose up
 ```
+
+If you cloned the repository without turning off git autocrlf you can run these commands to fix the issue then run docker-compose up
+
+```
+dos2unix Dockerfile
+dos2unix docker-compose.yml
+dos2unix migrate.sh
+```
+
+**Note this issue might also happen with other candidates using windows so you might need to do this with other candidates as well**
+
+
+***
 
 if you face vm.max_map_count issue with the Elastic search container it's a docker vertual memory issue and has to be handled on the host machine ( your pc or server), I could run a bash file to set it in the container but that might also change the host machine which is something that I didn't want to do without permission. refer to this stackoverflow answer
 
 ```
 https://stackoverflow.com/a/69294687
 ```
+
+***
 
 ## Containers
 
@@ -30,6 +53,8 @@ These are the containers that will be created and run
 
 5- The Rails application container
 
+***
+
 ## Usage
 This is how I used each technology in the previously mentioned containers to responded to each requirement in the challenge description
 
@@ -41,6 +66,7 @@ This is how I used each technology in the previously mentioned containers to res
 
 4- RabbitMQ was used as a message queue between the Application and the Worker that consumes the messages and persists the data in database
 
+***
 
 ## Documentation
 I created a simple Postman collection and documentation to make it easier to try the Application out, You can see endpoints documentation and download the collection it self, It's attached in the link below
@@ -48,6 +74,7 @@ I created a simple Postman collection and documentation to make it easier to try
 ```
 https://documenter.getpostman.com/view/20503975/Uz5GowKg
 ```
+***
 
 ## Improvements
 
