@@ -4,7 +4,7 @@ A chat app for Instabug challenge, Please note this might not be the best Ruby/R
 
 ## How to run
 
-Just clone this repository and run docker-compose up in root directory
+Just clone this repository and run docker-compose up in root directory, And make sure none of the ports specified in the docker-compose file are already in use.
 
 ```bash
 docker-compose up
